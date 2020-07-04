@@ -142,6 +142,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public void bind(Post post) {
             // bind data of post into the item_post xml view
+
+            ParseFile profileImage = post.getUser().getParseFile("profileImage");
+            // bind profile photo to each post
+            Glide.with(context).load(profileImage.getUrl()).circleCrop().into(ivProfile);
+
             tvUsername.setText(post.getUser().getUsername());
             tvCaption.setText(post.getDescription());
             tvTimeStamp.setText(getRelativeTime(post.getCreatedAt()));

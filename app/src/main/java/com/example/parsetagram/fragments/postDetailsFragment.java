@@ -62,7 +62,6 @@ public class postDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getContext(), "Yay I got post " + myPost.getUser(), Toast.LENGTH_SHORT).show();
         // initialize variables
         ivProfile = view.findViewById(R.id.ivProfile);
         ivComment = view.findViewById(R.id.ivComment);
@@ -204,6 +203,7 @@ public class postDetailsFragment extends Fragment {
         tvTimeStamp.setText(PostAdapter.getRelativeTime(myPost.getCreatedAt()));
         ParseFile image = myPost.getImage();
         Glide.with(getContext()).load(myPost.getImage().getUrl()).into(ivPostPicture);
+        Glide.with(getContext()).load(myPost.getUser().getParseFile("profileImage").getUrl()).placeholder(R.drawable.instagram_user_filled_24).into(ivProfile);
     }
 
     @Override
