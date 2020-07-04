@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ public class profileFragment extends postFragment {
     List<Post> allPosts;
     PostAdapter adapter;
     Button btnLogout;
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -43,6 +45,7 @@ public class profileFragment extends postFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvMyPost = view.findViewById(R.id.rvMyPost);
         btnLogout = view.findViewById(R.id.btnLogout);
+        progressBar = view.findViewById(R.id.pbLoading);
         // Always remember to initialize list array so it's not null
         allPosts = new ArrayList<>();
         // create the adapter
@@ -74,6 +77,7 @@ public class profileFragment extends postFragment {
 
     @Override
     protected void queryPost() {
+        progressBar.setVisibility(View.VISIBLE);
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         //this query.include gets all the User information from parse as well
         query.include(Post.KEY_USER);
@@ -93,6 +97,8 @@ public class profileFragment extends postFragment {
                 allPosts.clear();
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+                // remove progress bar
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

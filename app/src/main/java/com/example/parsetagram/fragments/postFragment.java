@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.parsetagram.Post;
 import com.example.parsetagram.PostAdapter;
@@ -36,6 +37,7 @@ public class postFragment extends Fragment {
     PostAdapter adapter;
     List<Post> allPosts;
     SwipeRefreshLayout swipeContainer;
+    ProgressBar progressBar;
     public postFragment() {
         // Required empty public constructor
     }
@@ -53,6 +55,7 @@ public class postFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPosts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
+        progressBar = view.findViewById(R.id.pbLoading);
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -88,6 +91,8 @@ public class postFragment extends Fragment {
     }
 
     protected void queryPost() {
+        // show progress bar
+        progressBar.setVisibility(View.VISIBLE);
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         //this query.include gets all the User information from parse as well
         query.include(Post.KEY_USER);
@@ -109,6 +114,8 @@ public class postFragment extends Fragment {
                 //adapter.notifyDataSetChanged();
                 // Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
+                // remove progress bar
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

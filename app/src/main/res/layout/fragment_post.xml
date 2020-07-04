@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.postFragment">
 
+    <include layout="@layout/action_view_progress" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"
